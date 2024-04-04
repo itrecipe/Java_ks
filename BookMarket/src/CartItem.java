@@ -1,6 +1,8 @@
 //장바구니의 상품 항목을 관리할 수 있는 CartItem 클래스 생성
 public class CartItem {
-	private String[] itemBook = new String[7];
+	//private String[] itemBook = new String[7];
+	
+	private String itemBook;
 	private String bookID;
 	private int quantity;
 	private int totalPrice;
@@ -10,6 +12,7 @@ public class CartItem {
 		
 	}
 	
+	/* 이전에 작성했던 코드
 	public CartItem(String[] book) {
 		this.itemBook = book;
 		this.bookID = book[0];
@@ -24,7 +27,8 @@ public class CartItem {
 	public void setItemBook(String[] itemBook) {
 		this.itemBook = itemBook;
 	}
-
+	*/
+	
 	public String getBookID() {
 		return bookID;
 	}
