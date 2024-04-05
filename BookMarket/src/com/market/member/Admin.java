@@ -1,7 +1,9 @@
+package com.market.member;
+
 //관리자 정보 관리
 public class Admin extends Person {
-	private String id = "Admin";
-	private String password = "Admin1234";
+	private String id = "admin";
+	private String password = "1234";
 	
 	public Admin(String name, int phone) {
 		super(name, phone);

@@ -1,3 +1,4 @@
+package com.market.bookitem;
 //도서 정보 관리 클래스 생성
 public class Book extends Item {
 	private String author;

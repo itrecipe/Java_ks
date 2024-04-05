@@ -1,3 +1,4 @@
+package com.market.member;
 //고객 정보를 담고 있는 클래스 생성
 public class Person {
 	private String name;
