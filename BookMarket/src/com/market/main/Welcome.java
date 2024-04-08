@@ -1,11 +1,14 @@
 package com.market.main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
 import com.market.bookitem.Book;
 import com.market.cart.Cart;
+import com.market.exception.CartException;
 import com.market.member.Admin;
 import com.market.member.User;
 
@@ -15,7 +18,7 @@ public class Welcome {
 	   함수 호출이 가능하지만 없으면 직접 생성하여 호출 해줘야 한다.(사용자 정의 메서드)
 	   (예시로는 아래 케이스문과 menuGuestInfo 메서드 참조할것)
 	 */
-	
+
 	static final int NUM_BOOK = 3;
 	static final int NUM_ITEM = 7;
 	//	static CartItem[] mCartItem = new CartItem[NUM_BOOK];
@@ -26,7 +29,10 @@ public class Welcome {
 	public static void main(String[] args) {
 		//String[][] mBook = new String[NUM_BOOK][NUM_ITEM]; //도서 정보를 저장할 mBook을 2차원 배열로 생성
 
-		Book[] mBookList = new Book[NUM_BOOK];
+		//Book[] mBookList = new Book[NUM_BOOK];
+
+		Book[] mBookList; //도서 정보를 저장하기 위한 배열 mBookList를 수정
+		int mTotalBook = 0; //도서 개수를 저장하기 위한 mTotalBook 선언
 
 		Scanner input = new Scanner(System.in);
 
@@ -63,68 +69,84 @@ public class Welcome {
 			//메뉴 목록 출력 메서드 호출
 			menuIntroduction();
 
-			System.out.println("메뉴 번호를 선택");
-			int n = input.nextInt();
-			//System.out.println(n + "번을 선택 했다.");
+			try { //메인 메뉴 1 ~ 9를 선택해 처리하는 try문 영역
+				System.out.println("메뉴 번호를 선택");
+				int n = input.nextInt();
+				//System.out.println(n + "번을 선택 했다.");
 
-			//			if(n < 1 || n > 8) {
-			//				System.out.println("1부터 8까지 숫자를 입력");
-			//			} 
+				//			if(n < 1 || n > 8) {
+				//				System.out.println("1부터 8까지 숫자를 입력");
+				//			} 
 
-			if(n < 1 || n > 9) {
-				System.out.println("1 ~ 9 까지의 숫자 입력");
-			} else {
-				switch(n) { //switch문을 이용해 메뉴 선택 번호별 정보 출력
+				if(n < 1 || n > 9) {
+					System.out.println("1 ~ 9 까지의 숫자 입력");
+				} else {
+					switch(n) { //switch문을 이용해 메뉴 선택 번호별 정보 출력
 
-				case 1: 
-					//System.out.println("현재 고객 정보 : ");
-					//System.out.println("이름 " + userName + " 연락처 : " + userMobile);
+					case 1: 
+						//System.out.println("현재 고객 정보 : ");
+						//System.out.println("이름 " + userName + " 연락처 : " + userMobile);
 
-					//고객 정보 출력 메서드 호출
-					menuGuestInfo(userName, userMobile);
-					break;
+						//고객 정보 출력 메서드 호출
+						menuGuestInfo(userName, userMobile);
+						break;
 
-				case 2: 
-					//System.out.println("장바구니 상품 목록 보기 ");
-					menuCartItemList();
-					break;
+					case 2: 
+						//System.out.println("장바구니 상품 목록 보기 ");
+						menuCartItemList();
+						break;
 
-				case 3: 
-					//System.out.println("장바구니 비우기 ");
-					menuCartClear();
-					break;
+					case 3: 
+						//System.out.println("장바구니 비우기 ");
+						menuCartClear();
+						break;
 
-				case 4: 
-					//System.out.println("장바구니 항목 추가 ");
-					//menuCartAddItem(mBook);
-					//break;
-					menuCartAddItem(mBookList);
+					case 4: 
+						//System.out.println("장바구니 항목 추가 ");
+						//menuCartAddItem(mBook);
+						//break;
 
-				case 5: 
-					//System.out.println("5. 장바구니 항목 수량 줄이기 ");
-					menuCartRemoveItemCount();
-					break;
+						//totalFileBookList() 메서드를 호출하여 도서의 개수를 mToralBook에 저장한다.
+						mTotalBook = totalFileToBookList();
 
-				case 6: 
-					//System.out.println("6. 장바구니 항목 삭제 ");
-					menuCartRemoveItem();
-					break;			
+						//도서 개수 mTotalBook에 따라 도서 정보를 저장하기 위한 배열 mBookList 초기화
+						mBookList = new Book[mTotalBook];
+						menuCartAddItem(mBookList);
+						break;
 
-				case 7: 
-					//System.out.println("7. 영수증 표시 ");
-					menuCartBill();
-					break;			
+					case 5: 
+						//System.out.println("5. 장바구니 항목 수량 줄이기 ");
+						menuCartRemoveItemCount();
+						break;
 
-				case 8: 
-					//System.out.println("8. 종료");
-					menuExit();
-					quit = true;
-					break;
-				case 9:
-					menuAdminLogin();
-					break;
-				} //end switch
-			} //end if ~ else
+					case 6: 
+						//System.out.println("6. 장바구니 항목 삭제 ");
+						menuCartRemoveItem();
+						break;			
+
+					case 7: 
+						//System.out.println("7. 영수증 표시 ");
+						menuCartBill();
+						break;			
+
+					case 8: 
+						//System.out.println("8. 종료");
+						menuExit();
+						quit = true;
+						break;
+					case 9:
+						menuAdminLogin();
+						break;
+					} //end switch
+				} //end if ~ else
+			} //end try 
+			catch(CartException e) {
+				System.out.println(e.getMessage());
+				quit = true;
+			} catch(Exception e) {
+				System.out.println("올바르지 않은 메뉴 선택으로 시스템을 종료 합니다.");
+				quit = true;
+			} //end catch - 메인 메뉴를 잘못 선택 했을때 catch문으로 예외를 발생시켜 처리하는 영역
 		} //end while
 	} //end main
 
@@ -164,14 +186,14 @@ public class Welcome {
 			System.out.println("  ");
 		}
 		System.out.println("---------------------------------");
-		*/
-		
+		 */
+
 		if(mCart.mCartCount >= 0) {
 			mCart.printCart();
 		}
 	}
 
-	public static void menuCartClear() {
+	public static void menuCartClear() throws CartException {
 		//System.out.println("3. 장바구니 비우기");
 
 		if(mCart.mCartCount == 0)
@@ -243,7 +265,7 @@ public class Welcome {
 
 		BookList(booklist);
 
-		/*
+		/* 이전에 작성한 for
 		for(int i = 0; i < NUM_BOOK; i++) {
 			for (int j = 0; j < NUM_ITEM; j++)
 				System.out.println(book[i][j] + "|");
@@ -296,11 +318,12 @@ public class Welcome {
 		System.out.println("5. 장바구니 항목 수량 줄이기");
 	}
 
-	public static void menuCartRemoveItem() {
+	public static void menuCartRemoveItem() throws CartException {
 		//System.out.println("6. 장바구니 항목 삭제");
 
 		if(mCart.mCartCount == 0)
-			System.out.println("장바구니에 항목이 없어요");
+			throw new CartException("장바구니에 항목이 없어요!");
+		//System.out.println("장바구니에 항목이 없습니다!");
 		else {
 			menuCartItemList();
 			boolean quit = false;
@@ -332,28 +355,29 @@ public class Welcome {
 			}
 		}
 	}
-
 	//주문 처리 페이지 만들기
-	
+
 	//영수증 표시 및 메뉴 선택 처리
-	public static void menuCartBill() {
+	public static void menuCartBill() throws CartException {
 		//System.out.println("7. 영수증 표시");
-		
+
 		//장바구니에 항목이 없는 경우
 		if(mCart.mCartCount == 0)
-			System.out.println("장바구니에 항목이 없습니다!");
-		
+			throw new CartException("장바구니에 항목이 없어요!");
+		//System.out.println("장바구니에 항목이 없습니다!");
+
 		//장바구니에 항목이 있는 경우
 		else {
 			System.out.println("배송받을 분은 고객 정보와 같나요? Y | N");
 			Scanner input = new Scanner(System.in);
 			String str = input.nextLine();
-			
+
 			//고객 정보와 동일한 경우
 			if(str.toUpperCase().equals("Y")) {
 				System.out.println("배송지를 입력 하세요!");
-				//String address = input.nextLine();
-				
+
+				//주소를 입력 받을 변수
+				String address = input.nextLine();
 				//배송을 위한 고객정보(이름, 연락처, 주소)와 영수증 출력을 위한 pringBill()메서드 호출
 				printBill(mUser.getName(), String.valueOf(mUser.getPhone()), address);
 			}
@@ -369,21 +393,20 @@ public class Welcome {
 			}
 		}
 	}
-	
+
 	//주문 영수증 출력
 	public static void printBill(String name, String phone, String address) {
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date(); //날짜 객체 생성
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); //MM/dd/yyyy 형식의 현재 날짜 정보를 얻는다.
 		String strDate = formatter.format(date);
 		System.out.println();
 		System.out.println("--------------- 배송받을 고객 정보 ---------------");
 		System.out.println("고객명 : " + name + "  \t\t연락처 : " + phone);
 		System.out.println(" 배송지 : " + address + "\t\t발송일 : " + strDate);
-		
+
 		//장바구니에 담긴 항목을 출력
 		mCart.printCart();
-		
-		
+
 		//장바구니에 담긴 항목의 총금액을 산출
 		int sum = 0;
 		for(int i = 0; i < mCart.mCartCount; i++) {
@@ -429,7 +452,11 @@ public class Welcome {
 	}
 	 */
 
+	//도서 정보 목록 출력
 	public static void BookList(Book[] booklist) {
+		setFileToBookList(booklist); //도서 정보 목록을 읽어 저장하는 setFileToBookList() 메서드를 호출
+
+		/* 이전에 작성된 코드
 		booklist[0] = new Book("ISBN1234", "쉽게 배우는 JSP 웹 프로그래밍!!", 27000);
 		booklist[0].setAuthor("송미영");
 		booklist[0].setDescription("단계별로 쇼핑몰을 구현하며 배우는 JSP 웹 프로그래밍!");
@@ -447,6 +474,7 @@ public class Welcome {
 		booklist[2].setDescription("컴퓨팅 사고력을 키우는 블록 코딩");
 		booklist[2].setCategory("컴퓨터 입문");
 		booklist[2].setReleaseDate("2019/06/10");
+		 */
 	}
 
 	//장바구니에 도서를 추가하는 메서드
@@ -461,7 +489,7 @@ public class Welcome {
 			}
 		}
 		return flag;
-		*/
+		 */
 
 		return mCart.isCartInBook(bookId);
 	}
@@ -478,10 +506,129 @@ public class Welcome {
 		String adminPW = input.next();
 
 		Admin admin = new Admin(mUser.getName(), mUser.getPhone());
+
+		//새 도서 정보 입력받기
+		//관리자 인증을 거쳐 새로운 도서 정보를 키보드로 입력 할 수 있도록 해줄 조건문
 		if(adminId.equals(admin.getId()) && adminPW.equals(admin.getPassword())) {
-			System.out.println("이름 : " + admin.getName() + "  연락처 : " + admin.getPhone());
-			System.out.println("아이디 : " + admin.getId() + "  비밀번호 : " + admin.getPassword());
+			String[] writeBook = new String[7];
+			System.out.println("도서 정보를 추가할까요? Y | N");
+			String str = input.next();
+
+			if(str.toUpperCase().equals("Y")) {
+
+				/*
+				날짜 클래스 Date와 SimpleDateFormat을 이용해 도서 ID를
+				"ISBN" + 날짜 시간 (yyMMddhhmmss) 형식으로 자동 설정
+				 */
+
+				Date date = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyMMddhhmmss");
+				String strDate = formatter.format(date);
+				writeBook[0] = "ISBN" + strDate;
+				System.out.println("도서ID : " + writeBook[0]);
+				String st1 = input.nextLine();
+				System.out.print("도서명 : ");
+				writeBook[1] = input.nextLine();
+				System.out.print("가격 : ");
+				writeBook[2] = input.nextLine();
+				System.out.print("저자 : ");
+				writeBook[3] = input.nextLine();
+				System.out.print("설명 : ");
+				writeBook[4] = input.nextLine();
+				System.out.print("분야 : ");
+				writeBook[5] = input.nextLine();
+				System.out.print("출판일 : ");
+				writeBook[6] = input.nextLine();
+
+				//파일 처리를 위한 try ~ catch문
+				try {
+					/* book.txt 파일에 쓰기 위해 FileWriter 객체 생성
+					   (기존 파일에 쓰기 위해 FileWriter 생성자에 true 작성)
+					 */
+					FileWriter fw = new FileWriter("book.txt", true);
+
+					//새로 입력받은 도서 정보를 book.txt 파일에 저장한다. 
+					for(int i = 0; i < 7; i++)
+						fw.write(writeBook[i] + "\n");
+					fw.close(); //FileWriter 객체 종료
+					System.out.println("새 도서 정보가 저장되었습니다.");
+				} catch(Exception e) {
+					System.out.println(e);
+				}
+			}
+			else {
+				System.out.println("이름 : " + admin.getName() + "  연락처 : " + admin.getPhone());
+				System.out.println("아이디 : " + admin.getId() + "  비밀번호 : " + admin.getPassword());
+			}
 		} else
 			System.out.println("관리자 정보가 일치하지 않아요");
 	}
+
+	// 도서 정보 목록을 파일에서 읽어와 출력하기
+
+	//도서의 개수 얻기
+	public static int totalFileToBookList() {
+
+		try {
+			//book.txt 파일을 읽기 위한 FileReder 객체 생성
+			FileReader fr = new FileReader("book.txt");
+			BufferedReader reader = new BufferedReader(fr);
+			//파일에서 한 행씩 읽기 위한 BufferedReader 객체 생성
+
+			String str;
+
+			//도서의 개수를 저장하기 위해 선언된 지역변수
+			int num = 0;
+			while((str = reader.readLine()) != null) {
+				if(str.contains("ISBN")) 
+					++num;
+				/* 파일에서 읽은 한행에 문자열 "ISBN"이
+				   포함되어 있다면, 도서의 개수 num을 1 증가 시킨다.
+				 */
+			}
+
+			reader.close(); //BufferedReader 객체를 종료한다.
+			fr.close(); //FileReader 객체를 종료한다.
+
+			return num;
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+
+	//도서 정보 목록을 읽고 저장하기
+	public static void setFileToBookList(Book[] booklist) {
+		try {
+			FileReader fr = new FileReader("book.txt");
+			BufferedReader reader = new BufferedReader(fr);
+
+			String str2;
+			String[] readBook = new String[7];
+			int count = 0;
+
+			while ((str2 = reader.readLine()) != null) {
+				if(str2.contains("ISBN")) {
+					readBook[0] = str2;
+					readBook[1] = reader.readLine();
+					readBook[2] = reader.readLine();
+					readBook[3] = reader.readLine();
+					readBook[4] = reader.readLine();
+					readBook[5] = reader.readLine();
+					readBook[6] = reader.readLine();
+				}
+
+				booklist[count++] = new Book(readBook[0], readBook[1], 
+						Integer.parseInt(readBook[2]), readBook[3],
+						readBook[4], readBook[5], readBook[6]);
+			} //end while
+
+			reader.close();
+			fr.close();
+
+		} //end try 
+		catch(Exception e) {
+			System.out.println(e);
+		} //end catch
+	} //end main
 }
