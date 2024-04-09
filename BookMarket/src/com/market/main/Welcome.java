@@ -3,9 +3,11 @@ package com.market.main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 import com.market.bookitem.Book;
 import com.market.cart.Cart;
 import com.market.exception.CartException;
@@ -31,7 +33,11 @@ public class Welcome {
 
 		//Book[] mBookList = new Book[NUM_BOOK];
 
-		Book[] mBookList; //도서 정보를 저장하기 위한 배열 mBookList를 수정
+		//Book[] mBookList; //도서 정보를 저장하기 위한 배열 mBookList를 수정, 컬렉션 이전 코드
+
+		//컬렉션 파트에서 수정한 코드
+		ArrayList<Book> mBookList;
+
 		int mTotalBook = 0; //도서 개수를 저장하기 위한 mTotalBook 선언
 
 		Scanner input = new Scanner(System.in);
@@ -110,7 +116,10 @@ public class Welcome {
 						mTotalBook = totalFileToBookList();
 
 						//도서 개수 mTotalBook에 따라 도서 정보를 저장하기 위한 배열 mBookList 초기화
-						mBookList = new Book[mTotalBook];
+						//mBookList = new Book[mTotalBook]; //컬렉션 이전 코드
+
+						//컬렉션 파트에서 수정된 코드
+						mBookList = new ArrayList<Book>();
 						menuCartAddItem(mBookList);
 						break;
 
@@ -258,9 +267,11 @@ public class Welcome {
 				System.out.println("다시 입력 하세요");
 		} end while
 	}
-	 */
+	*/
 
-	public static void menuCartAddItem(Book[] booklist) {
+	//public static void menuCartAddItem(Book[] booklist) { //컬렉션 이전에 작성된 코드
+	public static void menuCartAddItem(ArrayList<Book> booklist) { //컬렉션 파트에서 수정된 코드
+		
 		//System.out.println("4. 장바구니 항목 추가");
 
 		BookList(booklist);
@@ -287,13 +298,18 @@ public class Welcome {
 			boolean flag = false;
 			int numId = -1;
 
+			/* 컬렉션 파트 이전 코드
 			for(int i = 0; i < NUM_BOOK; i++) {
 				if(str.equals(booklist[i].getBookId())) {
 					numId = i;
 					flag = true;
 					break;
 				}
-			} 
+			}
+			*/
+			
+			//컬렉션 파트에서 수정한 코드
+			
 
 			if(flag) {
 				System.out.println("장바구니에 추가하겠어요? Y | N ");
@@ -453,7 +469,10 @@ public class Welcome {
 	 */
 
 	//도서 정보 목록 출력
-	public static void BookList(Book[] booklist) {
+	//public static void BookList(Book[] booklist) { //컬렉션 이전에 작성된 코드
+	  
+	public static void BookList(ArrayList<Book> booklist) { //컬렉션 파트에서 수정된 코드
+		
 		setFileToBookList(booklist); //도서 정보 목록을 읽어 저장하는 setFileToBookList() 메서드를 호출
 
 		/* 이전에 작성된 코드
@@ -489,7 +508,7 @@ public class Welcome {
 			}
 		}
 		return flag;
-		 */
+		*/
 
 		return mCart.isCartInBook(bookId);
 	}
@@ -565,8 +584,7 @@ public class Welcome {
 	}
 
 	// 도서 정보 목록을 파일에서 읽어와 출력하기
-
-	//도서의 개수 얻기
+	// 도서의 개수 얻기
 	public static int totalFileToBookList() {
 
 		try {
