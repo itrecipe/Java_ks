@@ -309,8 +309,6 @@ public class Welcome {
 			*/
 			
 			//컬렉션 파트에서 수정한 코드
-			
-
 			if(flag) {
 				System.out.println("장바구니에 추가하겠어요? Y | N ");
 				str = input.nextLine(); //장바구니에 도서 추가 여부를 위한 입력값 (Y 또는 N)을 받는다.
