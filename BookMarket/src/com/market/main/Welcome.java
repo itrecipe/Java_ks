@@ -48,6 +48,7 @@ public class Welcome {
 		System.out.println("연락처 입력 : ");
 		int userMobile = input.nextInt(); //연락처를 정수로 받기
 
+		//유저라는 객체를 새로 생성 (매개변수로 String, int 1개씩 받아온다.)
 		mUser = new User(userName, userMobile);
 
 		//인사말을 출력해줄 변수
@@ -172,14 +173,14 @@ public class Welcome {
 
 	//입력 받은 고객 정보 출력 메서드
 	public static void menuGuestInfo(String name, int mobile) {
-
 		System.out.println("현재 고객 정보 : ");
-
-		System.out.println(" 이름 : " + mUser.getName() + "  연락처 : " + mUser.getPhone());
 
 		//		System.out.println("이름 : " + name + " 연락처 " + mobile);
 		//		Person person = new Person(name, mobile);
 		//		System.out.println(" 이름 : " + person.getName() + " 연락처 : " + person.getPhone());
+
+		//객체로 관리 하기 위해 수정된 코드
+		System.out.println(" 이름 : " + mUser.getName() + "  연락처 : " + mUser.getPhone());
 	}
 
 	//장바구니 상품 목록 표시
@@ -308,11 +309,23 @@ public class Welcome {
 			}
 			*/
 			
-			//컬렉션 파트에서 수정한 코드
+			//컬렉션 파드에서 수정된 코드
+			
+			for(int i=0; i < booklist.size(); i++) {
+				if(str.equals(booklist.get(i).getBookId())) {
+					numId = i;
+					flag = true;
+					break;
+				}
+				
+			}
+			
+			//컬렉션 파트에서 수정한 코드!
 			if(flag) {
 				System.out.println("장바구니에 추가하겠어요? Y | N ");
 				str = input.nextLine(); //장바구니에 도서 추가 여부를 위한 입력값 (Y 또는 N)을 받는다.
 
+				/* 컬렉션 이전에 작성된 코드
 				if(str.toUpperCase().equals("Y")) {
 					System.out.println(booklist[numId].getBookId() + " 도서가 장바구니에 추가되었습니다!");
 
@@ -321,6 +334,15 @@ public class Welcome {
 						//mCartItem[mCartCount++] = new CartItem(book[numId]);
 						mCart.insertBook(booklist[numId]);
 					}
+				}*/
+				
+				//컬렉션 이후에 작성한 코드
+				if(str.toUpperCase().equals("Y")) {
+					System.out.println(booklist.get(numId).getBookId() + " 도서가 장바구니에 추가 되었습니다!");
+				}
+				
+				if(!isCartInBook(booklist.get(numId).getBookId())) {
+					mCart.insertBook(booklist.get(numId));
 				}
 				quit = true;
 			} else
@@ -348,6 +370,7 @@ public class Welcome {
 				boolean flag = false;
 				int numId = -1;
 
+				/* 컬렉션 파트 이전에 작성된 코드
 				for(int i = 0; i < mCart.mCartCount; i++) {
 					if(str.equals(mCart.mCartItem[i].getBookID())) {
 						numId = i;
@@ -356,6 +379,19 @@ public class Welcome {
 						break;
 					}
 				}
+				*/
+				
+				//컬렉션 파트에서 수정된 코드
+				for(int i = 0; i < mCart.mCartCount; i++) {
+					if(str.equals(mCart.mCartItem.get(i).getBookID())) {
+						numId = i;
+						flag = true;
+
+						break;
+					}
+				}
+				
+				/* 컬렉션 파트 이전에 작성한 코드
 				if(flag) {
 					System.out.println("장바구니 항목을 삭제 할래요? Y | N");
 					str = input.nextLine();
@@ -366,6 +402,18 @@ public class Welcome {
 					}
 					quit = true;
 				}
+				*/
+				
+				//컬렉션 파트에서 수정된 코드
+				if(flag) {
+					System.out.println("장바구니 항목을 삭제 할래요? Y | N");
+					str = input.nextLine();
+					if(str.toUpperCase().equals("Y")) {
+						System.out.println(mCart.mCartItem.get(numId).getBookID() + " 장바구니에서 도서가 삭제 되었어요!");
+						mCart.removeCart(numId);
+					}
+					quit = true;
+				} else System.out.println("다시 입력 하세요!");
 			}
 		}
 	}
@@ -423,9 +471,15 @@ public class Welcome {
 
 		//장바구니에 담긴 항목의 총금액을 산출
 		int sum = 0;
+		
+		/* 컬렉션 이전에 작성된 코드
 		for(int i = 0; i < mCart.mCartCount; i++) {
 			sum += mCart.mCartItem[i].getTotalPrice();
-
+		*/
+		
+		for(int i = 0; i < mCart.mCartCount; i++) {
+			sum += mCart.mCartItem.get(i).getTotalPrice();
+			
 			//장바구니에 담긴 항목의 총금액을 출력
 			System.out.println("\t\t\t 주문 총 금액 : " + sum + "원\n");
 			System.out.println("-------------------------------------------");
@@ -614,14 +668,15 @@ public class Welcome {
 	}
 
 	//도서 정보 목록을 읽고 저장하기
-	public static void setFileToBookList(Book[] booklist) {
+	//public static void setFileToBookList(Book[] booklist) { //컬렉션 파트 이전에 작성한 코드
+	public static void setFileToBookList(ArrayList<Book> booklist) {
 		try {
 			FileReader fr = new FileReader("book.txt");
 			BufferedReader reader = new BufferedReader(fr);
 
 			String str2;
 			String[] readBook = new String[7];
-			int count = 0;
+			//int count = 0; //컬렉션 파트 이전에 작성한 코드
 
 			while ((str2 = reader.readLine()) != null) {
 				if(str2.contains("ISBN")) {
@@ -634,11 +689,17 @@ public class Welcome {
 					readBook[6] = reader.readLine();
 				}
 
+				/* 컬렉션 파트 이전에 작성된 코드
 				booklist[count++] = new Book(readBook[0], readBook[1], 
 						Integer.parseInt(readBook[2]), readBook[3],
 						readBook[4], readBook[5], readBook[6]);
+				*/
+				Book bookitem = new Book(readBook[0], readBook[1], Integer.parseInt
+					(readBook[2]), readBook[3], readBook[4], readBook[5], readBook[6]);
+				
+				booklist.add(bookitem);
+				
 			} //end while
-
 			reader.close();
 			fr.close();
 
