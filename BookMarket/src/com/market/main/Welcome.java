@@ -577,9 +577,9 @@ public class Welcome {
 		String adminPW = input.next();
 
 		Admin admin = new Admin(mUser.getName(), mUser.getPhone());
-
 		//새 도서 정보 입력받기
 		//관리자 인증을 거쳐 새로운 도서 정보를 키보드로 입력 할 수 있도록 해줄 조건문
+		//객체이기 때문에 ==이 아닌 .equals 메서드를 사용하여 조건을 비교해야 한다.
 		if(adminId.equals(admin.getId()) && adminPW.equals(admin.getPassword())) {
 			String[] writeBook = new String[7];
 			System.out.println("도서 정보를 추가할까요? Y | N");
@@ -688,7 +688,6 @@ public class Welcome {
 					readBook[5] = reader.readLine();
 					readBook[6] = reader.readLine();
 				}
-
 				/* 컬렉션 파트 이전에 작성된 코드
 				booklist[count++] = new Book(readBook[0], readBook[1], 
 						Integer.parseInt(readBook[2]), readBook[3],
