@@ -36,6 +36,7 @@ public class Cart implements CartInterface {
 		}
 		*/
 		
+		//내가 갖고 있는 리스트 만큼 뿌려주는 반복문
 		for(int i = 0; i < booklist.size(); i++) {
 			Book bookitem = booklist.get(i);
 			System.out.print(bookitem.getBookId() + "|");

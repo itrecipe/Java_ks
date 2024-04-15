@@ -1,14 +1,10 @@
 package com.market.main;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.Date;
+import java.io.*;
+import java.util.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-import com.market.bookitem.Book;
+import com.market.bookitem.*;
 import com.market.cart.Cart;
 import com.market.exception.CartException;
 import com.market.member.Admin;
@@ -19,9 +15,9 @@ public class Welcome {
 	/* static 키워드가 붙으면 메모리에 동적으로 할당되어 메소드명만으로도
 	   함수 호출이 가능하지만 없으면 직접 생성하여 호출 해줘야 한다.(사용자 정의 메서드)
 	   (예시로는 아래 케이스문과 menuGuestInfo 메서드 참조할것)
-	 */
+	*/
 
-	static final int NUM_BOOK = 3;
+	static final int NUM_BOOK = 3; //책의 개수
 	static final int NUM_ITEM = 7;
 	//	static CartItem[] mCartItem = new CartItem[NUM_BOOK];
 	//	static int mCartCount = 0;
@@ -103,7 +99,7 @@ public class Welcome {
 						menuCartItemList();
 						break;
 
-					case 3: 
+					case 3:
 						//System.out.println("장바구니 비우기 ");
 						menuCartClear();
 						break;
@@ -180,7 +176,7 @@ public class Welcome {
 		//		System.out.println(" 이름 : " + person.getName() + " 연락처 : " + person.getPhone());
 
 		//객체로 관리 하기 위해 수정된 코드
-		System.out.println(" 이름 : " + mUser.getName() + "  연락처 : " + mUser.getPhone());
+		System.out.println("이름 : " + mUser.getName() + " / 연락처 : " + mUser.getPhone());
 	}
 
 	//장바구니 상품 목록 표시
@@ -317,7 +313,6 @@ public class Welcome {
 					flag = true;
 					break;
 				}
-				
 			}
 			
 			//컬렉션 파트에서 수정한 코드!
@@ -417,8 +412,8 @@ public class Welcome {
 			}
 		}
 	}
+	
 	//주문 처리 페이지 만들기
-
 	//영수증 표시 및 메뉴 선택 처리
 	public static void menuCartBill() throws CartException {
 		//System.out.println("7. 영수증 표시");
@@ -463,8 +458,8 @@ public class Welcome {
 		String strDate = formatter.format(date);
 		System.out.println();
 		System.out.println("--------------- 배송받을 고객 정보 ---------------");
-		System.out.println("고객명 : " + name + "  \t\t연락처 : " + phone);
-		System.out.println(" 배송지 : " + address + "\t\t발송일 : " + strDate);
+		System.out.println("고객명 : " + name + " \t\t연락처 : " + phone);
+		System.out.println("배송지 : " + address + "\t\t발송일 : " + strDate);
 
 		//장바구니에 담긴 항목을 출력
 		mCart.printCart();
@@ -697,11 +692,9 @@ public class Welcome {
 					(readBook[2]), readBook[3], readBook[4], readBook[5], readBook[6]);
 				
 				booklist.add(bookitem);
-				
 			} //end while
 			reader.close();
 			fr.close();
-
 		} //end try 
 		catch(Exception e) {
 			System.out.println(e);
