@@ -12,13 +12,13 @@ import com.market.member.User;
 
 public class Welcome {
 	//자바의 규칙중 하나 상수는 대문자로 선언해야하고 final이라는 키워드를 붙인다!
-	/* static 키워드가 붙으면 메모리에 동적으로 할당되어 메소드명만으로도
+	/* static 키워드가 붙으면 메모리에 정적으로 할당되어 메소드명만으로도
 	   함수 호출이 가능하지만 없으면 직접 생성하여 호출 해줘야 한다.(사용자 정의 메서드)
 	   (예시로는 아래 케이스문과 menuGuestInfo 메서드 참조할것)
-	*/
+	 */
 
 	static final int NUM_BOOK = 3; //책의 개수
-	static final int NUM_ITEM = 7;
+	static final int NUM_ITEM = 7; //아이템 개수
 	//	static CartItem[] mCartItem = new CartItem[NUM_BOOK];
 	//	static int mCartCount = 0;
 	static Cart mCart = new Cart();
@@ -61,7 +61,6 @@ public class Welcome {
 			System.out.println("***********************************************");
 
 			/*
-			System.out.println("***********************************************");
 			System.out.println(" 1. 고객 정보 확인 \t4. 바구니에 항목 추가");
 			System.out.println(" 2. 장바구니 상품 목록 보기 \t5. 장바구니 항목 수량 줄이기");
 			System.out.println(" 3. 장바구니 비우기 \t6. 장바구니 항목 삭제");
@@ -158,7 +157,6 @@ public class Welcome {
 
 	//선택 가능한 메뉴 목록 출력 메서드
 	public static void menuIntroduction() {
-		System.out.println("***********************************************");
 		System.out.println(" 1. 고객 정보 확인 \t4. 바구니에 항목 추가");
 		System.out.println(" 2. 장바구니 상품 목록 보기 \t5. 장바구니 항목 수량 줄이기");
 		System.out.println(" 3. 장바구니 비우기 \t6. 장바구니 항목 삭제");
@@ -264,11 +262,11 @@ public class Welcome {
 				System.out.println("다시 입력 하세요");
 		} end while
 	}
-	*/
+	 */
 
 	//public static void menuCartAddItem(Book[] booklist) { //컬렉션 이전에 작성된 코드
 	public static void menuCartAddItem(ArrayList<Book> booklist) { //컬렉션 파트에서 수정된 코드
-		
+
 		//System.out.println("4. 장바구니 항목 추가");
 
 		BookList(booklist);
@@ -303,10 +301,10 @@ public class Welcome {
 					break;
 				}
 			}
-			*/
-			
+			 */
+
 			//컬렉션 파드에서 수정된 코드
-			
+
 			for(int i=0; i < booklist.size(); i++) {
 				if(str.equals(booklist.get(i).getBookId())) {
 					numId = i;
@@ -314,7 +312,7 @@ public class Welcome {
 					break;
 				}
 			}
-			
+
 			//컬렉션 파트에서 수정한 코드!
 			if(flag) {
 				System.out.println("장바구니에 추가하겠어요? Y | N ");
@@ -330,12 +328,12 @@ public class Welcome {
 						mCart.insertBook(booklist[numId]);
 					}
 				}*/
-				
+
 				//컬렉션 이후에 작성한 코드
 				if(str.toUpperCase().equals("Y")) {
 					System.out.println(booklist.get(numId).getBookId() + " 도서가 장바구니에 추가 되었습니다!");
 				}
-				
+
 				if(!isCartInBook(booklist.get(numId).getBookId())) {
 					mCart.insertBook(booklist.get(numId));
 				}
@@ -374,8 +372,8 @@ public class Welcome {
 						break;
 					}
 				}
-				*/
-				
+				 */
+
 				//컬렉션 파트에서 수정된 코드
 				for(int i = 0; i < mCart.mCartCount; i++) {
 					if(str.equals(mCart.mCartItem.get(i).getBookID())) {
@@ -385,7 +383,7 @@ public class Welcome {
 						break;
 					}
 				}
-				
+
 				/* 컬렉션 파트 이전에 작성한 코드
 				if(flag) {
 					System.out.println("장바구니 항목을 삭제 할래요? Y | N");
@@ -397,8 +395,8 @@ public class Welcome {
 					}
 					quit = true;
 				}
-				*/
-				
+				 */
+
 				//컬렉션 파트에서 수정된 코드
 				if(flag) {
 					System.out.println("장바구니 항목을 삭제 할래요? Y | N");
@@ -412,7 +410,7 @@ public class Welcome {
 			}
 		}
 	}
-	
+
 	//주문 처리 페이지 만들기
 	//영수증 표시 및 메뉴 선택 처리
 	public static void menuCartBill() throws CartException {
@@ -466,18 +464,18 @@ public class Welcome {
 
 		//장바구니에 담긴 항목의 총금액을 산출
 		int sum = 0;
-		
+
 		/* 컬렉션 이전에 작성된 코드
 		for(int i = 0; i < mCart.mCartCount; i++) {
 			sum += mCart.mCartItem[i].getTotalPrice();
-		*/
-		
+		 */
+
 		for(int i = 0; i < mCart.mCartCount; i++) {
 			sum += mCart.mCartItem.get(i).getTotalPrice();
-			
+
 			//장바구니에 담긴 항목의 총금액을 출력
 			System.out.println("\t\t\t 주문 총 금액 : " + sum + "원\n");
-			System.out.println("-------------------------------------------");
+			System.out.println("------------------------------------------------");
 			System.out.println();
 		}
 	}
@@ -517,9 +515,9 @@ public class Welcome {
 
 	//도서 정보 목록 출력
 	//public static void BookList(Book[] booklist) { //컬렉션 이전에 작성된 코드
-	  
+
 	public static void BookList(ArrayList<Book> booklist) { //컬렉션 파트에서 수정된 코드
-		
+
 		setFileToBookList(booklist); //도서 정보 목록을 읽어 저장하는 setFileToBookList() 메서드를 호출
 
 		/* 이전에 작성된 코드
@@ -555,7 +553,7 @@ public class Welcome {
 			}
 		}
 		return flag;
-		*/
+		 */
 
 		return mCart.isCartInBook(bookId);
 	}
@@ -687,10 +685,10 @@ public class Welcome {
 				booklist[count++] = new Book(readBook[0], readBook[1], 
 						Integer.parseInt(readBook[2]), readBook[3],
 						readBook[4], readBook[5], readBook[6]);
-				*/
+				 */
 				Book bookitem = new Book(readBook[0], readBook[1], Integer.parseInt
-					(readBook[2]), readBook[3], readBook[4], readBook[5], readBook[6]);
-				
+						(readBook[2]), readBook[3], readBook[4], readBook[5], readBook[6]);
+
 				booklist.add(bookitem);
 			} //end while
 			reader.close();
