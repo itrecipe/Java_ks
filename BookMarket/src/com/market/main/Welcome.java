@@ -455,7 +455,7 @@ public class Welcome {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); //MM/dd/yyyy 형식의 현재 날짜 정보를 얻는다.
 		String strDate = formatter.format(date);
 		System.out.println();
-		System.out.println("--------------- 배송받을 고객 정보 ---------------");
+		System.out.println("------------------- 배송받을 고객 정보 --------------------");
 		System.out.println("고객명 : " + name + " \t\t연락처 : " + phone);
 		System.out.println("배송지 : " + address + "\t\t발송일 : " + strDate);
 
@@ -474,7 +474,7 @@ public class Welcome {
 			sum += mCart.mCartItem.get(i).getTotalPrice();
 
 			//장바구니에 담긴 항목의 총금액을 출력
-			System.out.println("\t\t\t 주문 총 금액 : " + sum + "원\n");
+			System.out.println("\t\t\t 주문 총 금액 : " + sum + " 원\n");
 			System.out.println("------------------------------------------------");
 			System.out.println();
 		}
@@ -563,10 +563,10 @@ public class Welcome {
 		System.out.println("관리자 정보를 입력");
 
 		Scanner input = new Scanner(System.in);
-		System.out.println("아이디 : ");
+		System.out.println("ID : ");
 		String adminId = input.next();
 
-		System.out.println("비밀번호 : ");
+		System.out.println("PW : ");
 		String adminPW = input.next();
 
 		Admin admin = new Admin(mUser.getName(), mUser.getPhone());
@@ -590,7 +590,8 @@ public class Welcome {
 				String strDate = formatter.format(date);
 				writeBook[0] = "ISBN" + strDate;
 				System.out.println("도서ID : " + writeBook[0]);
-				String st1 = input.nextLine();
+				String st1 = input.nextLine(); //키보드로 한 행 입력시 엔터키를 입력으로 처리한다.
+				//키보드로 한 행씩 입력받은 도서 정보를 배열 writeBook에 저장한다.
 				System.out.print("도서명 : ");
 				writeBook[1] = input.nextLine();
 				System.out.print("가격 : ");
@@ -609,14 +610,14 @@ public class Welcome {
 					/* book.txt 파일에 쓰기 위해 FileWriter 객체 생성
 					   (기존 파일에 쓰기 위해 FileWriter 생성자에 true 작성)
 					 */
-					FileWriter fw = new FileWriter("book.txt", true);
+					FileWriter fw = new FileWriter("book.txt", true); //기본값은 false(덮어쓰기), true를 줘야 추가로 새롭게 작성한다.
 
 					//새로 입력받은 도서 정보를 book.txt 파일에 저장한다. 
 					for(int i = 0; i < 7; i++)
 						fw.write(writeBook[i] + "\n");
 					fw.close(); //FileWriter 객체 종료
 					System.out.println("새 도서 정보가 저장되었습니다.");
-				} catch(Exception e) {
+				} catch(Exception e) { //이상한 값을 넣었을 경우를 대비해 exception 처리를 해줌(try문을 작성했으므로 반드시 해주는게 좋다.)
 					System.out.println(e);
 				}
 			}
@@ -671,7 +672,12 @@ public class Welcome {
 			String[] readBook = new String[7];
 			//int count = 0; //컬렉션 파트 이전에 작성한 코드
 
+			//readLine() 한 행을 읽어오는 메서드
+			//파일에서 읽을 행이 없을때까지 반복
 			while ((str2 = reader.readLine()) != null) {
+				/* 파일에서 읽은 한 행에 문자열 "ISBN"이 포함되어 있다면
+				   도서 정보에 대해 한 행씩 읽어 지역변수 readBook에 저장한다.
+				 */
 				if(str2.contains("ISBN")) {
 					readBook[0] = str2;
 					readBook[1] = reader.readLine();
@@ -682,7 +688,8 @@ public class Welcome {
 					readBook[6] = reader.readLine();
 				}
 				/* 컬렉션 파트 이전에 작성된 코드
-				booklist[count++] = new Book(readBook[0], readBook[1], 
+				 * Book 클래스의 생성자를 통해 도서 정보를 저장한다.
+				booklist[count++] = new Book(readBook[0], readBook[1],
 						Integer.parseInt(readBook[2]), readBook[3],
 						readBook[4], readBook[5], readBook[6]);
 				 */
