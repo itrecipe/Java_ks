@@ -1,15 +1,15 @@
 package com.market.member;
-//고객 정보를 담고 있는 클래스 생성
+
 public class Person {
 	private String name;
 	private int phone;
 	private String address;
-	
+
 	public Person(String name, int phone) {
 		this.name = name;
 		this.phone = phone;
 	}
-	
+
 	public Person(String name, int phone, String address) {
 		this.name = name;
 		this.phone = phone;

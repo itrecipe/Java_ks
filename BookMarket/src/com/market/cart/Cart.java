@@ -38,7 +38,7 @@ public class Cart implements CartInterface {
 		
 		//내가 갖고 있는 리스트 만큼 뿌려주는 반복문
 		for(int i = 0; i < booklist.size(); i++) {
-			Book bookitem = booklist.get(i);
+			Book bookitem = booklist.get(i); //booklist에 있는 i값을 get()를 이용해 가져온다.
 			System.out.print(bookitem.getBookId() + "|");
 			System.out.print(bookitem.getName() + "|");
 			System.out.print(bookitem.getUnitPrice() + "|");
@@ -56,8 +56,6 @@ public class Cart implements CartInterface {
 		CartItem bookitem = new CartItem(book);
 		mCartItem.add(bookitem);
 		mCartCount = mCartItem.size();
-		
-		
 	}
 
 	//장바구니에 담긴 항목을 모두 삭제하는 deleteBook() 메서드
@@ -71,7 +69,7 @@ public class Cart implements CartInterface {
 	public void printCart() {
 		System.out.println("장바구니 상품 목록");
 		System.out.println("---------------------------------------");
-		System.out.println("   도서ID \t|  수량 \t|   합계");
+		System.out.println("  도서ID  \t|  수량  \t|  합계");
 		
 		/* 컬렉션 이전 코드
 		for(int i = 0; i < mCartCount; i++) {
@@ -118,6 +116,7 @@ public class Cart implements CartInterface {
 
 	//장바구니의 특정 항목을 삭제하는 removeCart() 메서드
 	public void removeCart(int numId) {
+		
 		/* 컬렉션 이전 코드
 		CartItem[] cartItem = new CartItem[NUM_BOOK];
 		int num = 0;

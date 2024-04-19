@@ -15,7 +15,7 @@ public class Welcome {
 	/* static 키워드가 붙으면 메모리에 정적으로 할당되어 메소드명만으로도
 	   함수 호출이 가능하지만 없으면 직접 생성하여 호출 해줘야 한다.(사용자 정의 메서드)
 	   (예시로는 아래 케이스문과 menuGuestInfo 메서드 참조할것)
-	 */
+	*/
 
 	static final int NUM_BOOK = 3; //책의 개수
 	static final int NUM_ITEM = 7; //아이템 개수
@@ -303,8 +303,7 @@ public class Welcome {
 			}
 			 */
 
-			//컬렉션 파드에서 수정된 코드
-
+			//컬렉션 파트에서 수정된 코드
 			for(int i=0; i < booklist.size(); i++) {
 				if(str.equals(booklist.get(i).getBookId())) {
 					numId = i;
@@ -377,9 +376,8 @@ public class Welcome {
 				//컬렉션 파트에서 수정된 코드
 				for(int i = 0; i < mCart.mCartCount; i++) {
 					if(str.equals(mCart.mCartItem.get(i).getBookID())) {
-						numId = i;
-						flag = true;
-
+						numId = i; //위치값을 저장
+						flag = true; //특정 조건
 						break;
 					}
 				}
@@ -583,7 +581,7 @@ public class Welcome {
 				/*
 				날짜 클래스 Date와 SimpleDateFormat을 이용해 도서 ID를
 				"ISBN" + 날짜 시간 (yyMMddhhmmss) 형식으로 자동 설정
-				 */
+				*/
 
 				Date date = new Date();
 				SimpleDateFormat formatter = new SimpleDateFormat("yyMMddhhmmss");

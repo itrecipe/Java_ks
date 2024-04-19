@@ -1,5 +1,5 @@
 package com.market.bookitem;
-//도서 정보 관리 클래스 생성
+
 public class Book extends Item {
 	private String author;
 	private String description;
@@ -9,27 +9,39 @@ public class Book extends Item {
 	public Book(String bookId, String name, int unitPrice) {
 		super(bookId, name, unitPrice);
 	}
-	
-	public Book(String bookId, String name, int unitPrice, String author,
-			String description, String category, String releaseDate) {
-			super(bookId, name, unitPrice);
-			this.author = author;
-			this.description = description;
-			this.category = category;
-			this.releaseDate = releaseDate;
+
+	public Book(String bookId, String name, int unitPrice, String author, String description, String category,
+			String releaseDate) {
+		super(bookId, name, unitPrice);
+		this.author = author;
+		this.description = description;
+		this.category = category;
+		this.releaseDate = releaseDate;
 	}
-	
-	public String getBookId() { return bookId; }
-	
-	public void setBookId(String bookId) { this.bookId = bookId; }
-	
-	public String getName() { return name; }
-	
-	public void setName(String name) { this.name = name; }
-	
-	public int getUnitPrice() { return unitPrice; }
-	
-	public void setUnitPrice(int unitPrice) { this.unitPrice = unitPrice; }
+
+	public String getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 
 	public String getAuthor() {
 		return author;
